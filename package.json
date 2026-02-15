@@ -1,0 +1,45 @@
+{
+  "name": "fitness-tracker-75kg-journey",
+  "version": "1.0.0",
+  "description": "Complete fitness tracking system for weight loss journey from 99.8kg to 75kg",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 8000 -c-1",
+    "dev": "npx http-server -p 8000 -c-1 -o",
+    "deploy": "vercel --prod",
+    "deploy:netlify": "netlify deploy --prod --dir .",
+    "build": "echo 'No build step required - static site'",
+    "test": "echo 'Tests coming soon'",
+    "serve": "python -m http.server 8000"
+  },
+  "keywords": [
+    "fitness",
+    "weight-loss",
+    "health",
+    "tracking",
+    "meal-planning",
+    "exercise",
+    "progress-tracking",
+    "excel-export",
+    "email-automation"
+  ],
+  "author": "Fitness Tracker Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/fitness-tracker.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "> 1%",
+    "not dead"
+  ]
+}

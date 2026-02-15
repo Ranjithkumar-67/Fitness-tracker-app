@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#4F46E5">
+    <title>75kg Journey - Your Complete Fitness Tracker</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-heartbeat"></i>
+                <span>75kg Journey</span>
+            </div>
+            <div class="nav-links">
+                <a href="#dashboard" class="nav-link active" data-page="dashboard">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </a>
+                <a href="#daily-log" class="nav-link" data-page="daily-log">
+                    <i class="fas fa-calendar-check"></i> Daily Log
+                </a>
+                <a href="#meal-plan" class="nav-link" data-page="meal-plan">
+                    <i class="fas fa-utensils"></i> Meal Plan
+                </a>
+                <a href="#exercise" class="nav-link" data-page="exercise">
+                    <i class="fas fa-dumbbell"></i> Exercise
+                </a>
+                <a href="#progress" class="nav-link" data-page="progress">
+                    <i class="fas fa-trophy"></i> Progress
+                </a>
+                <a href="#settings" class="nav-link" data-page="settings">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        
+        <!-- DASHBOARD PAGE -->
+        <section id="dashboard" class="page active">
+            <div class="page-header">
+                <h1>Welcome to Your Fitness Journey!</h1>
+                <p class="date-display">Today: <span id="current-date"></span> | Day <span id="journey-day">1</span> of 365</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card primary">
+                    <div class="stat-icon">
+                        <i class="fas fa-weight"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Current Weight</h3>
+                        <p class="stat-value"><span id="current-weight">99.8</span> kg</p>
+                        <p class="stat-change"><span id="weight-change">0</span> kg from start</p>
+                    </div>
+                </div>
+
+                <div class="stat-card success">
+                    <div class="stat-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Target Weight</h3>
+                        <p class="stat-value">75.0 kg</p>
+                        <p class="stat-change"><span id="remaining-weight">24.8</span> kg to go</p>
+                    </div>
+                </div>
+
+                <div class="stat-card info">
+                    <div class="stat-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Days Streak</h3>
+                        <p class="stat-value"><span id="streak-days">0</span> days</p>
+                        <p class="stat-change">Keep going!</p>
+                    </div>
+                </div>
+
+                <div class="stat-card warning">
+                    <div class="stat-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Progress</h3>
+                        <p class="stat-value"><span id="progress-percent">0</span>%</p>
+                        <p class="stat-change">of goal achieved</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Chart -->
+            <div class="chart-container">
+                <h2>Weight Progress Chart</h2>
+                <canvas id="weight-chart"></canvas>
+            </div>
+
+            <!-- Today's Checklist -->
+            <div class="today-checklist">
+                <h2>Today's Checklist</h2>
+                <div class="checklist-grid">
+                    <label class="checkbox-card">
+                        <input type="checkbox" id="check-water">
+                        <div class="checkbox-content">
+                            <i class="fas fa-tint"></i>
+                            <span>Lemon Water (6:15 AM)</span>
+                        </div>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" id="check-workout">
+                        <div class="checkbox-content">
+                            <i class="fas fa-running"></i>
+                            <span>15-Min Workout</span>
+                        </div>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" id="check-breakfast">
+                        <div class="checkbox-content">
+                            <i class="fas fa-coffee"></i>
+                            <span>Healthy Breakfast</span>
+                        </div>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" id="check-greens">
+                        <div class="checkbox-content">
+                            <i class="fas fa-leaf"></i>
+                            <span>Greens at Lunch</span>
+                        </div>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" id="check-sprouts">
+                        <div class="checkbox-content">
+                            <i class="fas fa-seedling"></i>
+                            <span>Sprouts (Any Meal)</span>
+                        </div>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" id="check-water-intake">
+                        <div class="checkbox-content">
+                            <i class="fas fa-glass-water"></i>
+                            <span>12+ Glasses Water</span>
+                        </div>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" id="check-walk">
+                        <div class="checkbox-content">
+                            <i class="fas fa-walking"></i>
+                            <span>30+ Mins Walking</span>
+                        </div>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" id="check-sleep">
+                        <div class="checkbox-content">
+                            <i class="fas fa-bed"></i>
+                            <span>Sleep by 10:30 PM</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h2>Quick Actions</h2>
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="showPage('daily-log')">
+                        <i class="fas fa-plus"></i> Log Today's Data
+                    </button>
+                    <button class="action-btn" onclick="exportToExcel()">
+                        <i class="fas fa-file-excel"></i> Export to Excel
+                    </button>
+                    <button class="action-btn" onclick="showEmailSettings()">
+                        <i class="fas fa-envelope"></i> Setup Email Reports
+                    </button>
+                    <button class="action-btn" onclick="showPage('progress')">
+                        <i class="fas fa-camera"></i> Upload Progress Photo
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- DAILY LOG PAGE -->
+        <section id="daily-log" class="page">
+            <div class="page-header">
+                <h1>Daily Activity Log</h1>
+                <p>Track your meals, exercise, and daily activities</p>
+            </div>
+
+            <div class="log-form-container">
+                <form id="daily-log-form">
+                    <!-- Date Selection -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-calendar"></i> Date</h3>
+                        <input type="date" id="log-date" class="form-input" required>
+                    </div>
+
+                    <!-- Weight & Measurements -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-weight"></i> Weight & Measurements (Sunday Only)</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Weight (kg)</label>
+                                <input type="number" step="0.1" id="log-weight" class="form-input" placeholder="99.8">
+                            </div>
+                            <div class="form-group">
+                                <label>Chest (cm)</label>
+                                <input type="number" step="0.1" id="log-chest" class="form-input" placeholder="105">
+                            </div>
+                            <div class="form-group">
+                                <label>Waist (cm)</label>
+                                <input type="number" step="0.1" id="log-waist" class="form-input" placeholder="110">
+                            </div>
+                            <div class="form-group">
+                                <label>Hip (cm)</label>
+                                <input type="number" step="0.1" id="log-hip" class="form-input" placeholder="118">
+                            </div>
+                            <div class="form-group">
+                                <label>Thigh (cm)</label>
+                                <input type="number" step="0.1" id="log-thigh" class="form-input" placeholder="120">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Meals -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-utensils"></i> Meals</h3>
+                        <div class="form-group">
+                            <label>Pre-Breakfast (6:30 AM)</label>
+                            <input type="text" id="log-pre-breakfast" class="form-input" placeholder="2 boiled eggs / Sprouts salad">
+                        </div>
+                        <div class="form-group">
+                            <label>Breakfast (8:30 AM)</label>
+                            <input type="text" id="log-breakfast" class="form-input" placeholder="1 dosa + sambar">
+                        </div>
+                        <div class="form-group">
+                            <label>Mid-Morning Snack (11:00 AM)</label>
+                            <input type="text" id="log-mid-morning" class="form-input" placeholder="Buttermilk + fruit">
+                        </div>
+                        <div class="form-group">
+                            <label>Lunch (1:00 PM)</label>
+                            <textarea id="log-lunch" class="form-input" rows="2" placeholder="2 chapathi + spinach curry + dal + salad"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Evening Snack (4:00 PM)</label>
+                            <input type="text" id="log-evening" class="form-input" placeholder="Sprouts sundal + green tea">
+                        </div>
+                        <div class="form-group">
+                            <label>Dinner (8:30 PM)</label>
+                            <textarea id="log-dinner" class="form-input" rows="2" placeholder="2 chapathi + vegetable curry + salad"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Water Intake -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-tint"></i> Water Intake</h3>
+                        <div class="water-tracker">
+                            <label>Glasses (Target: 12-14)</label>
+                            <div class="water-glasses">
+                                <div class="glass-input">
+                                    <button type="button" onclick="decrementWater()">-</button>
+                                    <input type="number" id="log-water" class="form-input" value="0" min="0" max="20">
+                                    <button type="button" onclick="incrementWater()">+</button>
+                                </div>
+                                <div class="water-visual" id="water-visual"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exercise -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-dumbbell"></i> Exercise & Activity</h3>
+                        <div class="form-grid">
+                            <div class="form-group checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="log-morning-workout">
+                                    Morning Workout (15 min)
+                                </label>
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="log-walk-station">
+                                    Brisk Walk to Station (20 min)
+                                </label>
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="log-stood-commute">
+                                    Stood in Train/Bus
+                                </label>
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="log-office-breaks">
+                                    Office Movement Breaks (3-4 times)
+                                </label>
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="log-evening-walk">
+                                    Evening Walk (15-20 min)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Total Exercise Minutes</label>
+                            <input type="number" id="log-exercise-minutes" class="form-input" placeholder="30">
+                        </div>
+                    </div>
+
+                    <!-- Greens & Sprouts -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-leaf"></i> Greens & Sprouts</h3>
+                        <div class="form-grid">
+                            <div class="form-group checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="log-ate-greens">
+                                    Ate Greens Today
+                                </label>
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="log-ate-sprouts">
+                                    Ate Sprouts Today
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Greens Type (if any)</label>
+                            <input type="text" id="log-greens-type" class="form-input" placeholder="Spinach / Fenugreek / Amaranth">
+                        </div>
+                    </div>
+
+                    <!-- Mood & Energy -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-smile"></i> Mood & Energy</h3>
+                        <div class="form-group">
+                            <label>Mood</label>
+                            <select id="log-mood" class="form-input">
+                                <option value="happy">😊 Happy</option>
+                                <option value="neutral">😐 Neutral</option>
+                                <option value="sad">☹️ Sad</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Energy Level (1-10)</label>
+                            <input type="range" id="log-energy" class="form-range" min="1" max="10" value="5">
+                            <span id="energy-value">5</span>
+                        </div>
+                    </div>
+
+                    <!-- Sleep -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-bed"></i> Sleep</h3>
+                        <div class="form-group">
+                            <label>Sleep Time</label>
+                            <input type="time" id="log-sleep-time" class="form-input" value="22:30">
+                        </div>
+                        <div class="form-group">
+                            <label>Wake Up Time</label>
+                            <input type="time" id="log-wake-time" class="form-input" value="06:15">
+                        </div>
+                    </div>
+
+                    <!-- Notes -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-sticky-note"></i> Notes & Challenges</h3>
+                        <div class="form-group">
+                            <label>Today's Wins</label>
+                            <textarea id="log-wins" class="form-input" rows="2" placeholder="What went well today?"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Challenges Faced</label>
+                            <textarea id="log-challenges" class="form-input" rows="2" placeholder="What was difficult?"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Today's Log
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="clearForm()">
+                            <i class="fas fa-times"></i> Clear Form
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- MEAL PLAN PAGE -->
+        <section id="meal-plan" class="page">
+            <div class="page-header">
+                <h1>Your Personalized Meal Plan</h1>
+                <p>Daily calorie target: 1,500-1,600 kcal</p>
+            </div>
+
+            <div class="meal-plan-container">
+                <!-- Meal Plan for Current Week -->
+                <div class="week-selector">
+                    <button onclick="previousWeek()"><i class="fas fa-chevron-left"></i></button>
+                    <h3>Week <span id="current-week">1</span> Meal Plan</h3>
+                    <button onclick="nextWeek()"><i class="fas fa-chevron-right"></i></button>
+                </div>
+
+                <div id="meal-plan-content" class="meal-plan-grid">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+
+                <!-- Shopping List -->
+                <div class="shopping-list-section">
+                    <h2>This Week's Shopping List</h2>
+                    <button class="btn btn-primary" onclick="generateShoppingList()">
+                        <i class="fas fa-shopping-cart"></i> Generate Shopping List
+                    </button>
+                    <div id="shopping-list-content"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXERCISE PAGE -->
+        <section id="exercise" class="page">
+            <div class="page-header">
+                <h1>Exercise & Workout Plans</h1>
+                <p>Your customized workout routines</p>
+            </div>
+
+            <div class="exercise-container">
+                <!-- Morning Routine -->
+                <div class="exercise-card">
+                    <h3><i class="fas fa-sun"></i> Morning Home Workout (15 mins)</h3>
+                    <p class="exercise-time">Time: 6:20 - 6:35 AM</p>
+                    <div class="exercise-list">
+                        <div class="exercise-item">
+                            <span class="exercise-name">Jumping Jacks</span>
+                            <span class="exercise-detail">30 seconds × 2 rounds</span>
+                        </div>
+                        <div class="exercise-item">
+                            <span class="exercise-name">Bodyweight Squats</span>
+                            <span class="exercise-detail">15 reps × 2 rounds</span>
+                        </div>
+                        <div class="exercise-item">
+                            <span class="exercise-name">Push-ups (wall/knee)</span>
+                            <span class="exercise-detail">10 reps × 2 rounds</span>
+                        </div>
+                        <div class="exercise-item">
+                            <span class="exercise-name">Lunges</span>
+                            <span class="exercise-detail">10 each leg × 2 rounds</span>
+                        </div>
+                        <div class="exercise-item">
+                            <span class="exercise-name">Plank Hold</span>
+                            <span class="exercise-detail">30 seconds × 2 rounds</span>
+                        </div>
+                        <div class="exercise-item">
+                            <span class="exercise-name">High Knees</span>
+                            <span class="exercise-detail">30 seconds × 2 rounds</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="startWorkoutTimer('morning')">
+                        <i class="fas fa-play"></i> Start Workout Timer
+                    </button>
+                </div>
+
+                <!-- Evening Routine -->
+                <div class="exercise-card">
+                    <h3><i class="fas fa-moon"></i> Evening Routine (15-20 mins)</h3>
+                    <p class="exercise-time">Time: After reaching home (8:30-9:00 PM)</p>
+                    <div class="exercise-list">
+                        <div class="exercise-item">
+                            <span class="exercise-name">Neighborhood Walk</span>
+                            <span class="exercise-detail">15-20 minutes brisk walking</span>
+                        </div>
+                        <div class="exercise-item">
+                            <span class="exercise-name">OR Home Workout</span>
+                            <span class="exercise-detail">Same as morning routine</span>
+                        </div>
+                        <div class="exercise-item">
+                            <span class="exercise-name">Stretching</span>
+                            <span class="exercise-detail">10 minutes before bed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Targeted Exercises -->
+                <div class="exercise-card">
+                    <h3><i class="fas fa-bullseye"></i> Targeted Exercises (Thighs/Butt/Mid)</h3>
+                    <div class="exercise-tabs">
+                        <button class="tab-btn active" onclick="showExerciseTab('thighs')">For Thighs</button>
+                        <button class="tab-btn" onclick="showExerciseTab('butt')">For Butt</button>
+                        <button class="tab-btn" onclick="showExerciseTab('mid')">For Mid Section</button>
+                    </div>
+                    <div id="exercise-tab-content">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Weekend Exercise -->
+                <div class="exercise-card">
+                    <h3><i class="fas fa-calendar-week"></i> Weekend Exercise (1 hour each day)</h3>
+                    <div class="weekend-options">
+                        <div class="option-card">
+                            <i class="fas fa-walking"></i>
+                            <h4>Walking/Jogging</h4>
+                            <p>30 mins cardio</p>
+                        </div>
+                        <div class="option-card">
+                            <i class="fas fa-bicycle"></i>
+                            <h4>Cycling</h4>
+                            <p>30 mins</p>
+                        </div>
+                        <div class="option-card">
+                            <i class="fas fa-swimmer"></i>
+                            <h4>Swimming</h4>
+                            <p>30 mins</p>
+                        </div>
+                        <div class="option-card">
+                            <i class="fas fa-table-tennis"></i>
+                            <h4>Sports</h4>
+                            <p>Badminton/Football</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROGRESS PAGE -->
+        <section id="progress" class="page">
+            <div class="page-header">
+                <h1>Progress Tracking</h1>
+                <p>Your transformation journey</p>
+            </div>
+
+            <div class="progress-container">
+                <!-- Photo Upload -->
+                <div class="photo-upload-section">
+                    <h2>Progress Photos</h2>
+                    <div class="upload-grid">
+                        <div class="upload-card">
+                            <h4>Front View</h4>
+                            <input type="file" id="photo-front" accept="image/*" onchange="handlePhotoUpload(event, 'front')">
+                            <div class="photo-preview" id="preview-front">
+                                <i class="fas fa-camera"></i>
+                                <p>Upload Photo</p>
+                            </div>
+                        </div>
+                        <div class="upload-card">
+                            <h4>Side View</h4>
+                            <input type="file" id="photo-side" accept="image/*" onchange="handlePhotoUpload(event, 'side')">
+                            <div class="photo-preview" id="preview-side">
+                                <i class="fas fa-camera"></i>
+                                <p>Upload Photo</p>
+                            </div>
+                        </div>
+                        <div class="upload-card">
+                            <h4>Back View</h4>
+                            <input type="file" id="photo-back" accept="image/*" onchange="handlePhotoUpload(event, 'back')">
+                            <div class="photo-preview" id="preview-back">
+                                <i class="fas fa-camera"></i>
+                                <p>Upload Photo</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="saveProgressPhotos()">
+                        <i class="fas fa-save"></i> Save Photos for This Month
+                    </button>
+                </div>
+
+                <!-- Before/After Comparison -->
+                <div class="comparison-section">
+                    <h2>Before & After Comparison</h2>
+                    <div id="comparison-slider">
+                        <!-- Will show before/after photos -->
+                    </div>
+                </div>
+
+                <!-- Measurements Progress -->
+                <div class="measurements-chart">
+                    <h2>Measurements Progress</h2>
+                    <canvas id="measurements-chart"></canvas>
+                </div>
+
+                <!-- Monthly Milestones -->
+                <div class="milestones-section">
+                    <h2>Monthly Milestones</h2>
+                    <div class="milestone-timeline" id="milestone-timeline">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SETTINGS PAGE -->
+        <section id="settings" class="page">
+            <div class="page-header">
+                <h1>Settings & Configuration</h1>
+                <p>Customize your tracking experience</p>
+            </div>
+
+            <div class="settings-container">
+                <!-- Profile Settings -->
+                <div class="settings-section">
+                    <h3><i class="fas fa-user"></i> Profile Information</h3>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="settings-name" class="form-input" placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="settings-email" class="form-input" placeholder="your.email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Starting Date</label>
+                        <input type="date" id="settings-start-date" class="form-input">
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Starting Weight (kg)</label>
+                            <input type="number" step="0.1" id="settings-start-weight" class="form-input" value="99.8">
+                        </div>
+                        <div class="form-group">
+                            <label>Target Weight (kg)</label>
+                            <input type="number" step="0.1" id="settings-target-weight" class="form-input" value="75.0">
+                        </div>
+                        <div class="form-group">
+                            <label>Height (cm)</label>
+                            <input type="number" id="settings-height" class="form-input" value="182">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email Report Settings -->
+                <div class="settings-section">
+                    <h3><i class="fas fa-envelope"></i> Email Report Settings</h3>
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="settings-weekly-report">
+                            Send Weekly Progress Report (Every Sunday)
+                        </label>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="settings-monthly-report">
+                            Send Monthly Summary Report
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Report Email Time</label>
+                        <input type="time" id="settings-report-time" class="form-input" value="08:00">
+                    </div>
+                    <button class="btn btn-primary" onclick="setupEmailAutomation()">
+                        <i class="fas fa-cog"></i> Configure Email Automation
+                    </button>
+                </div>
+
+                <!-- Reminder Settings -->
+                <div class="settings-section">
+                    <h3><i class="fas fa-bell"></i> Reminder Settings</h3>
+                    <div class="reminders-list">
+                        <div class="reminder-item">
+                            <label>
+                                <input type="checkbox" id="reminder-wake" checked>
+                                Wake Up Reminder (6:15 AM)
+                            </label>
+                        </div>
+                        <div class="reminder-item">
+                            <label>
+                                <input type="checkbox" id="reminder-workout" checked>
+                                Workout Reminder (6:20 AM)
+                            </label>
+                        </div>
+                        <div class="reminder-item">
+                            <label>
+                                <input type="checkbox" id="reminder-breakfast" checked>
+                                Breakfast Reminder (8:30 AM)
+                            </label>
+                        </div>
+                        <div class="reminder-item">
+                            <label>
+                                <input type="checkbox" id="reminder-lunch" checked>
+                                Lunch Reminder (1:00 PM)
+                            </label>
+                        </div>
+                        <div class="reminder-item">
+                            <label>
+                                <input type="checkbox" id="reminder-evening" checked>
+                                Evening Snack Reminder (4:00 PM)
+                            </label>
+                        </div>
+                        <div class="reminder-item">
+                            <label>
+                                <input type="checkbox" id="reminder-dinner" checked>
+                                Dinner Reminder (8:30 PM)
+                            </label>
+                        </div>
+                        <div class="reminder-item">
+                            <label>
+                                <input type="checkbox" id="reminder-sleep" checked>
+                                Sleep Reminder (10:30 PM)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Management -->
+                <div class="settings-section">
+                    <h3><i class="fas fa-database"></i> Data Management</h3>
+                    <div class="data-actions">
+                        <button class="btn btn-primary" onclick="exportAllData()">
+                            <i class="fas fa-download"></i> Export All Data (Excel)
+                        </button>
+                        <button class="btn btn-secondary" onclick="importData()">
+                            <i class="fas fa-upload"></i> Import Data
+                        </button>
+                        <button class="btn btn-secondary" onclick="backupData()">
+                            <i class="fas fa-cloud"></i> Backup to Cloud
+                        </button>
+                        <button class="btn btn-danger" onclick="resetAllData()">
+                            <i class="fas fa-trash"></i> Reset All Data
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Save Settings -->
+                <div class="form-actions">
+                    <button class="btn btn-success btn-lg" onclick="saveSettings()">
+                        <i class="fas fa-save"></i> Save All Settings
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal for Email Setup -->
+    <div id="email-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('email-modal')">&times;</span>
+            <h2>Email Automation Setup</h2>
+            <p>Configure automated weekly email reports using EmailJS service</p>
+            <div class="form-group">
+                <label>Service ID</label>
+                <input type="text" id="emailjs-service" class="form-input" placeholder="service_xxxxxxx">
+            </div>
+            <div class="form-group">
+                <label>Template ID (Weekly)</label>
+                <input type="text" id="emailjs-template-weekly" class="form-input" placeholder="template_xxxxxxx">
+            </div>
+            <div class="form-group">
+                <label>Public Key</label>
+                <input type="text" id="emailjs-public-key" class="form-input" placeholder="Your EmailJS Public Key">
+            </div>
+            <button class="btn btn-primary" onclick="saveEmailConfig()">Save Configuration</button>
+            <div class="info-box">
+                <p><strong>Setup Instructions:</strong></p>
+                <ol>
+                    <li>Create account at <a href="https://www.emailjs.com/" target="_blank">EmailJS.com</a></li>
+                    <li>Create email service (Gmail, Outlook, etc.)</li>
+                    <li>Create email template</li>
+                    <li>Copy Service ID, Template ID, and Public Key here</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workout Timer Modal -->
+    <div id="workout-timer-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('workout-timer-modal')">&times;</span>
+            <h2>Workout Timer</h2>
+            <div id="timer-display" class="timer-display">15:00</div>
+            <div id="current-exercise" class="current-exercise">Get Ready!</div>
+            <div class="timer-controls">
+                <button class="btn btn-success" id="start-timer">Start</button>
+                <button class="btn btn-warning" id="pause-timer">Pause</button>
+                <button class="btn btn-danger" id="reset-timer">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

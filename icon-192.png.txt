@@ -1,0 +1,11 @@
+This file should be replaced with an actual 192x192 PNG icon.
+
+To create your icon:
+1. Use any logo/image you like
+2. Resize to 192x192 pixels
+3. Save as "icon-192.png"
+4. Delete this .txt file
+
+Or use free tools:
+- https://www.favicon-generator.org/
+- https://realfavicongenerator.net/
